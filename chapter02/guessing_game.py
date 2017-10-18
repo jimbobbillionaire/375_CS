@@ -1,3 +1,4 @@
+#This program preforms a number guessing game with the user
 import random
 def main():
     magic_number=random.randrange (1,100)
