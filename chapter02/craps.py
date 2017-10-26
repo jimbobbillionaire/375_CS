@@ -15,23 +15,32 @@
 
 import random
 
-
+winnings = 100
+current_bet = 0
 def main():
+    global winnings, current_bet
     display_welcome()
-
     play_again = True
     while play_again:
+        current_bet=place_bet()
         total = roll_dice()
         if total == 7 or total == 11:
             print("You win!")
+            winnings = winnings + current_bet
         elif total == 2 or total == 3 or total == 12:
             print("You lose!")
+            winnings = winnings - current_bet
         else:
             re_roll(total)
 
         print() # Blank line for spacing
-        play_again = (input("Press enter to play another round or type 'N' to quit ") == '')
-        clear_screen()
+        print("Winnings: $", winnings, sep="")
+        if winnings < 5:
+            print("You're out of money! Game Over!")
+            play_again = False
+        else:
+            play_again = (input("Type 'Y' to play in another round or type 'N' to quit ") == 'Y')
+            clear_screen()
 
 
 def clear_screen():
@@ -50,7 +59,6 @@ def display_welcome():
 
 def roll_dice():
     input("Press Enter to roll the dice...") # We don't do anything with the input, we're just using it to pause the game
-
     die1 = random.randrange(1, 7)
     die2 = random.randrange(1, 7)
     total = die1 + die2
@@ -65,6 +73,7 @@ def roll_dice():
 
 
 def re_roll(point):
+    global winnings, current_bet
     print("You have to keep rolling until you get another", point)
     print() # Blank line for spacing
 
@@ -74,8 +83,18 @@ def re_roll(point):
 
     if total == point:
         print("You win!")
+        winnings = winnings + current_bet
     else:
         print("You lose!")
+        winnings = winnings - current_bet
 
-
+def place_bet():
+    current_bet = eval(input("You have $" + str(winnings) + ". How much are you betting?"))
+    if current_bet < 5:
+        print("Sorry, the minumum bet is $5, so we'll use that")
+        current_bet = 5
+    elif current_bet > winnings:
+        print("Sorry, the maximum bet is", winnings, "so we'll use that")
+        current_bet = winnings
+    return current_bet
 main()
