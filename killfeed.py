@@ -179,7 +179,7 @@ def draw_head_shot_2():
     jimbob = Text(Point(centerhs2.getCenter().getX() + size/3.75,centerhs2.getCenter().getY()), "jimbobbillionaire")
     jimbob.setTextColor('red')
     jimbob.draw(win)
-
+#
 def draw_head_shot_3():
     edge = Circle(Point(size/2,size/2.5), size/20)
     edge.setFill('black')
